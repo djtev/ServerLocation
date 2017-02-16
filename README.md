@@ -1,0 +1,2 @@
+# ServerLocation
+for Hypixel
