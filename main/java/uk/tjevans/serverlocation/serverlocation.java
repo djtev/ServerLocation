@@ -54,17 +54,15 @@ public class serverlocation{
 
     @SubscribeEvent
     public void RenderGameOverlayEvent(RenderGameOverlayEvent e) {
-        Minecraft mc = Minecraft.getMinecraft();
-        if (!isOnHypixel || !mc.inGameHasFocus){
+        if (!isOnHypixel || !Minecraft.getMinecraft().inGameHasFocus){
             return;
         }
-        mc.fontRendererObj.drawStringWithShadow("Instance: " + server, 10, 10, 0xC838FC);
+        Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("Instance: " + server, 10, 10, 0xC838FC);
     }
   
     @SubscribeEvent
     public void onConnect(FMLNetworkEvent.ClientConnectedToServerEvent e) {
-        Minecraft mc = Minecraft.getMinecraft();
-        final ServerData data = mc.getCurrentServerData();
+        final ServerData data = Minecraft.getMinecraft().getCurrentServerData();
         if (data != null && data.serverIP.contains("hypixel.net")) {
             isOnHypixel = true;
             startServerCheckThread();
@@ -85,7 +83,6 @@ public class serverlocation{
     }
 
     public void issueLocationCommand() {
-        Minecraft mc = Minecraft.getMinecraft();
-        mc.thePlayer.sendChatMessage("/whereami");
+        Minecraft.getMinecraft().thePlayer.sendChatMessage("/whereami");
 	}
 }
