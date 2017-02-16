@@ -15,7 +15,6 @@ import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 @Mod(modid = "server location", version = "0.1", acceptedMinecraftVersions = "[1.8]")
 public class serverlocation{
 
-    private static final Minecraft MINECRAFT;
     private boolean isOnHypixel = false;
     private String server = "NULL";
     private Thread thread = null;
@@ -23,7 +22,6 @@ public class serverlocation{
 
     @EventHandler
     public void init(FMLInitializationEvent event){
-        MINECRAFT = Minecraft.getMinecraft();
         thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -56,15 +54,17 @@ public class serverlocation{
 
     @SubscribeEvent
     public void RenderGameOverlayEvent(RenderGameOverlayEvent e) {
-        if (!isOnHypixel || !MINECRAFT.inGameHasFocus){
+        Minecraft mc = Minecraft.getMinecraft();
+        if (!isOnHypixel || !mc.inGameHasFocus){
             return;
         }
-        MINECRAFT.fontRendererObj.drawStringWithShadow("Instance: " + server, 10, 10, 0xC838FC);
+        mc.fontRendererObj.drawStringWithShadow("Instance: " + server, 10, 10, 0xC838FC);
     }
   
     @SubscribeEvent
     public void onConnect(FMLNetworkEvent.ClientConnectedToServerEvent e) {
-        final ServerData data = MINECRAFT.getCurrentServerData();
+        Minecraft mc = Minecraft.getMinecraft();
+        final ServerData data = mc.getCurrentServerData();
         if (data != null && data.serverIP.contains("hypixel.net")) {
             isOnHypixel = true;
             startServerCheckThread();
@@ -85,6 +85,7 @@ public class serverlocation{
     }
 
     public void issueLocationCommand() {
-	  MINECRAFT.thePlayer.sendChatMessage("/whereami");
+        Minecraft mc = Minecraft.getMinecraft();
+        mc.thePlayer.sendChatMessage("/whereami");
 	}
 }
