@@ -19,7 +19,7 @@ public class serverlocation{
     private boolean isOnHypixel = false;
     private String server = "NULL";
     private Thread thread = null;
-    private int timeOut = 10000;
+    private int timeOut = 30000;
     private boolean askedForCommand = false;
 
     @EventHandler
@@ -47,10 +47,10 @@ public class serverlocation{
             return;
         }
         String chat = e.message.getUnformattedText().replaceAll("\u00A7.", "");
-        if(chat.contains(":") || !chat.contains("You are currently on server") || chat.contains("An internal error occurred")){
+        if(chat.contains(":") || !chat.contains("You are currently on server") || !chat.contains("An internal error occurred")){
             return;
         }
-        if(chat.contains("An internal error occured")){
+        else if(chat.contains("An internal error occurred")){
             server = "Limbo?";
             e.setCanceled(true);
         }else {
@@ -76,7 +76,8 @@ public class serverlocation{
 
 
     private void drawInstanceOnScreen(){
-        Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("Instance: " + server, 10, 10, 0xC838FC);
+    	Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("Hypixel", 10, 5, 0xC838FC);
+        Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("Instance: " + server, 10, 15, 0xC838FC);
 
     }
 
