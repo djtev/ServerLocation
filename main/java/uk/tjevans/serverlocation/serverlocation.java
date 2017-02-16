@@ -49,12 +49,12 @@ public class serverlocation
             return;
         }
         String[] split = chat.split(" ");
-        server = split[4]
+        server = split[4];
 	}
 
     @SubscribeEvent
   public void onRenderChatGui(GuiScreenEvent.DrawScreenEvent.Post e) {
-    if (!isOnHypixel)){
+    if (!isOnHypixel){
       return;
     }
     e.gui.drawCenteredString(MINECRAFT.fontRendererObj, EnumChatFormatting.WHITE + 
