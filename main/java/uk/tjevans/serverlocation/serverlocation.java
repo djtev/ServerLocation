@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 @Mod(modid = "server location", version = "0.1", acceptedMinecraftVersions = "[1.8]")
 public class serverlocation{
 
-    private static final Minecraft MINECRAFT = Minecraft.getMinecraft();
+    private static final Minecraft MINECRAFT;
     private boolean isOnHypixel = false;
     private String server = "NULL";
     private Thread thread = null;
@@ -23,6 +23,7 @@ public class serverlocation{
 
     @EventHandler
     public void init(FMLInitializationEvent event){
+        MINECRAFT = Minecraft.getMinecraft();
         thread = new Thread(new Runnable() {
             @Override
             public void run() {
