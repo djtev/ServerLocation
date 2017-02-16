@@ -57,9 +57,10 @@ public class serverlocation
     if (!isOnHypixel){
       return;
     }
-    e.gui.drawCenteredString(MINECRAFT.fontRendererObj, EnumChatFormatting.WHITE + 
-        "Instance: " + server, e.gui.width - 40, 7, 0xFF);
+		If(MINECRAFT.hasingamefocus){
+		MINECRAFT.fontrenderobject.drawstringwithshadow("Instance: " + server, 10, 10, 0xC838FC)
 		}
+	}
   
   @SubscribeEvent
   public void onConnect(FMLNetworkEvent.ClientConnectedToServerEvent e) {
@@ -76,6 +77,6 @@ public class serverlocation
   
   @EventHandler
   public void onServerConnect() {
-	  Minecraft.getMinecraft().thePlayer.sendChatMessage("/whereami");
+	  MINECRAFT.thePlayer.sendChatMessage("/whereami");
 	}
 }
