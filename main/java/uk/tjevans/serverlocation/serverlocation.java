@@ -77,9 +77,8 @@ public class serverlocation
     isOnHypixel = false;
   }
   
-  @SubscribeEvent
-    public void joinWorld(FMLNetworkEvent.ClientConnectedToServerEvent e)
-    {
+  @EventHandler
+  public void onServerConnect() {
 	  Minecraft.getMinecraft().thePlayer.sendChatMessage("/whereami");
 	}
 }
