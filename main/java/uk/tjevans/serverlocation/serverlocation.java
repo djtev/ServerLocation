@@ -58,7 +58,7 @@ public class serverlocation
       return;
     }
 		If(MINECRAFT.hasingamefocus){
-		MINECRAFT.fontrenderobject.drawstringwithshadow("Instance: " + server, 10, 10, 0xC838FC)
+		MINECRAFT.fontrenderobject.drawstringwithshadow("Instance: " + server, 10, 10, 0xC838FC);
 		}
 	}
   
