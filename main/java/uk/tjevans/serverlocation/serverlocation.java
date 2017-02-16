@@ -49,7 +49,8 @@ public class serverlocation{
             return;
         }
         String[] split = chat.split(" ");
-        server = split[4];
+        server = split[5];
+        e.setCanceled(true);
     }
 
     @SubscribeEvent
@@ -80,6 +81,7 @@ public class serverlocation{
     @SubscribeEvent
     public void onDisconnect(FMLNetworkEvent.ClientDisconnectionFromServerEvent e) {
     isOnHypixel = false;
+    stopServercheckThread();
     }
 
     public void issueLocationCommand() {
