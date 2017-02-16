@@ -57,7 +57,7 @@ public class serverlocation
     if (!isOnHypixel){
       return;
     }
-		If(MINECRAFT.hasingamefocus){
+		if(MINECRAFT.hasingamefocus){
 		MINECRAFT.fontrenderobject.drawstringwithshadow("Instance: " + server, 10, 10, 0xC838FC);
 		}
 	}
