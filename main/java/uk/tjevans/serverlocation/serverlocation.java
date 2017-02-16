@@ -56,12 +56,10 @@ public class serverlocation
 
     @SubscribeEvent
   public void RenderGameOverlayEvent(RenderGameOverlayEvent e) {
-    if (!isOnHypixel){
+    if (!isOnHypixel||MINECRAFT.hasingamefocus){
       return;
     }
-	if(MINECRAFT.hasingamefocus){
-		MINECRAFT.fontrenderobject.drawstringwithshadow("Instance: " + server, 10, 10, 0xC838FC);
-		}
+	MINECRAFT.fontRenderObj.drawStringWithShadow("Instance: " + server, 10, 10, 0xC838FC);
 	}
   
   @SubscribeEvent
