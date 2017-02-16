@@ -49,10 +49,7 @@ public class serverlocation
             return;
         }
         String[] split = chat.split(" ");
-        for(int i = 4; i < split.length; i++)
-        {
-            server+=(" " + split[i]);
-        }
+        server = split[4]
 	}
 
     @SubscribeEvent
