@@ -47,11 +47,15 @@ public class serverlocation{
             return;
         }
         String chat = e.message.getUnformattedText().replaceAll("\u00A7.", "");
-        if(!chat.contains("You are currently on server")){
+        if(chat.contains(":") || !chat.contains("You are currently on server") || chat.contains("An internal error occurred")){
             return;
         }
-        String[] split = chat.split(" ");
-        server = split[5];
+        if(chat.contains("An internal error occured")){
+            server = "Limbo?";
+        }else {
+            String[] split = chat.split(" ");
+            server = split[5];
+        }
         if(askedForCommand) {
             e.setCanceled(true);
             askedForCommand = false;
