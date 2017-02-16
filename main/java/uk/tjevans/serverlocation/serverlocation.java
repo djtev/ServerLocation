@@ -52,6 +52,7 @@ public class serverlocation{
         }
         if(chat.contains("An internal error occured")){
             server = "Limbo?";
+            e.setCanceled(true);
         }else {
             String[] split = chat.split(" ");
             server = split[5];
