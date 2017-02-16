@@ -1,6 +1,7 @@
 package uk.tjevans.serverlocation;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -19,6 +20,7 @@ public class serverlocation{
     private String server = "NULL";
     private Thread thread = null;
     private int timeOut = 10000;
+    private boolean askedForCommand = false;
 
     @EventHandler
     public void init(FMLInitializationEvent event){
@@ -38,7 +40,7 @@ public class serverlocation{
         MinecraftForge.EVENT_BUS.register(this);
         FMLCommonHandler.instance().bus().register(this);
     }
-  
+
     @SubscribeEvent
     public void checkChat(ClientChatReceivedEvent e){
         if(e.type!=0){
@@ -50,17 +52,29 @@ public class serverlocation{
         }
         String[] split = chat.split(" ");
         server = split[5];
-        e.setCanceled(true);
+        if(askedForCommand) {
+            e.setCanceled(true);
+            askedForCommand = false;
+        }
     }
 
     @SubscribeEvent
     public void RenderGameOverlayEvent(RenderGameOverlayEvent e) {
-        if (!isOnHypixel || !Minecraft.getMinecraft().inGameHasFocus){
+        if(e.type != RenderGameOverlayEvent.ElementType.TEXT){
             return;
         }
-        Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("Instance: " + server, 10, 10, 0xC838FC);
+        if (!isOnHypixel || (!Minecraft.getMinecraft().inGameHasFocus && !(Minecraft.getMinecraft().currentScreen != null && (Minecraft.getMinecraft().currentScreen instanceof GuiChat)))){
+            return;
+        }
+        drawInstanceOnScreen();
     }
-  
+
+
+    private void drawInstanceOnScreen(){
+        Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("Instance: " + server, 10, 10, 0xC838FC);
+
+    }
+
     @SubscribeEvent
     public void onConnect(FMLNetworkEvent.ClientConnectedToServerEvent e) {
         final ServerData data = Minecraft.getMinecraft().getCurrentServerData();
@@ -80,11 +94,12 @@ public class serverlocation{
 
     @SubscribeEvent
     public void onDisconnect(FMLNetworkEvent.ClientDisconnectionFromServerEvent e) {
-    isOnHypixel = false;
-    stopServercheckThread();
+        isOnHypixel = false;
+        stopServercheckThread();
     }
 
     public void issueLocationCommand() {
+        askedForCommand = true;
         Minecraft.getMinecraft().thePlayer.sendChatMessage("/whereami");
-	}
+    }
 }
