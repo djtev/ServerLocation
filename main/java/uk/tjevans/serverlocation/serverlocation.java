@@ -11,6 +11,7 @@ import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 
 @Mod(modid = "server location", version = "0.1", acceptedMinecraftVersions = "[1.8]")
@@ -18,13 +19,13 @@ public class serverlocation{
 
     private boolean isOnHypixel = false;
     private String server = "NULL";
-    private Thread thread = null;
-    private int timeOut = 30000;
+   // private Thread thread = null;
+   // private int timeOut = 30000;
     private boolean askedForCommand = false;
 
     @EventHandler
     public void init(FMLInitializationEvent event){
-        thread = new Thread(new Runnable() {
+     /*   thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 while(true) {
@@ -36,7 +37,7 @@ public class serverlocation{
                     }
                 }
             }
-        });
+        });*/
         MinecraftForge.EVENT_BUS.register(this);
         FMLCommonHandler.instance().bus().register(this);
     }
@@ -86,26 +87,31 @@ public class serverlocation{
         final ServerData data = Minecraft.getMinecraft().getCurrentServerData();
         if (data != null && data.serverIP.contains("hypixel.net")) {
             isOnHypixel = true;
-            startServerCheckThread();
+            //startServerCheckThread();
         }
     }
 
-    private void startServerCheckThread(){
+ /*   private void startServerCheckThread(){
         thread.start();
     }
 
     private void stopServercheckThread(){
         thread.interrupt();
-    }
+    } */
 
     @SubscribeEvent
     public void onDisconnect(FMLNetworkEvent.ClientDisconnectionFromServerEvent e) {
         isOnHypixel = false;
-        stopServercheckThread();
+        //stopServercheckThread();
     }
 
-    public void issueLocationCommand() {
+	@SubscribeEvent
+    public void onWorldJoin(PlayerChangedDimensionEvent event){
+    	Minecraft.getMinecraft().thePlayer.sendChatMessage("/whereami");
+    }
+	
+  /*  public void issueLocationCommand() {
         askedForCommand = true;
         Minecraft.getMinecraft().thePlayer.sendChatMessage("/whereami");
-    }
+    }*/
 }
