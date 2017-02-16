@@ -22,7 +22,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-@Mod(modid = "Server Location", version = "0.1", acceptedMinecraftVersions = "[1.8]")
+@Mod(modid = "server location", version = "0.1", acceptedMinecraftVersions = "[1.8]")
 public class serverlocation
 {
 
