@@ -5,6 +5,8 @@ import net.minecraft.client.gui.GuiChat;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.MinecraftForge;
@@ -57,7 +59,7 @@ public class serverlocation
     if (!isOnHypixel){
       return;
     }
-		if(MINECRAFT.hasingamefocus){
+	if(MINECRAFT.hasingamefocus){
 		MINECRAFT.fontrenderobject.drawstringwithshadow("Instance: " + server, 10, 10, 0xC838FC);
 		}
 	}
