@@ -53,7 +53,7 @@ public class serverlocation
 	}
 
     @SubscribeEvent
-  public void onRenderChatGui(GuiScreenEvent.DrawScreenEvent.Post e) {
+  public void RenderGameOverlayEvent(RenderGameOverlayEvent e) {
     if (!isOnHypixel){
       return;
     }
