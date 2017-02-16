@@ -54,7 +54,7 @@ public class serverlocation
 
     @SubscribeEvent
   public void onRenderChatGui(GuiScreenEvent.DrawScreenEvent.Post e) {
-    if (!isOnHypixel || !(e.gui instanceof GuiChat)){
+    if (!isOnHypixel)){
       return;
     }
     e.gui.drawCenteredString(MINECRAFT.fontRendererObj, EnumChatFormatting.WHITE + 
