@@ -1,14 +1,7 @@
 package uk.tjevans.serverlocation;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiChat;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.client.multiplayer.ServerData;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.ScaledResolution;
-import net.minecraftforge.client.event.GuiScreenEvent;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
@@ -16,13 +9,8 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 
 @Mod(modid = "server location", version = "0.1", acceptedMinecraftVersions = "[1.8]")
 public class serverlocation
@@ -56,10 +44,10 @@ public class serverlocation
 
     @SubscribeEvent
   public void RenderGameOverlayEvent(RenderGameOverlayEvent e) {
-    if (!isOnHypixel||MINECRAFT.hasingamefocus){
+    if (!isOnHypixel || !MINECRAFT.inGameHasFocus){
       return;
     }
-	MINECRAFT.fontRenderObj.drawStringWithShadow("Instance: " + server, 10, 10, 0xC838FC);
+	MINECRAFT.fontRendererObj.drawStringWithShadow("Instance: " + server, 10, 10, 0xC838FC);
 	}
   
   @SubscribeEvent
