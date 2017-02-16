@@ -1,0 +1,16 @@
+[
+{
+  "modid": "Server Location",
+  "name": "Server Location",
+  "description": "Display location on Hypixel",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["tom396"],
+  "credits": "tom396",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
