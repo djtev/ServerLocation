@@ -14,6 +14,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 @Mod(modid = "server location", version = "0.1", acceptedMinecraftVersions = "[1.8]")
 public class serverlocation{
 
@@ -31,7 +34,9 @@ public class serverlocation{
 
     @EventHandler
     public void init(FMLInitializationEvent event){
-        thread = new Thread(new Runnable() {
+        MinecraftForge.EVENT_BUS.register(this);
+        FMLCommonHandler.instance().bus().register(this);
+    	thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 while(true) {
@@ -44,8 +49,6 @@ public class serverlocation{
                 }
             }
         });
-        MinecraftForge.EVENT_BUS.register(this);
-        FMLCommonHandler.instance().bus().register(this);
     }
 
     @SubscribeEvent
@@ -54,10 +57,10 @@ public class serverlocation{
             return;
         }
         String chat = e.message.getUnformattedText().replaceAll("\u00A7.", "");
-        if(chat.contains(":") || !chat.contains("You are currently on server") || !chat.contains("An internal error occurred")){
+        if(chat.contains(":") || (!chat.contains("You are currently on server") && !chat.contains("An internal error occurred"))){
             return;
         }
-        else if(chat.contains("An internal error occurred")){
+        if(chat.contains("An internal error occurred")){
             server = "Limbo?";
             e.setCanceled(true);
         }else {
@@ -85,7 +88,7 @@ public class serverlocation{
     private void drawInstanceOnScreen(){
     	Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("Hypixel", 5, 5, 0xC838FC);
         Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("Instance: " + server, 5, 15, 0xC838FC);
-        Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("X:" + x, 5, 25, 0xC838FC);
+        Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("X: " + x, 5, 25, 0xC838FC);
         Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("Y: " + y, 5, 35, 0xC838FC);
         Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("Z: " + z, 5, 45, 0xC838FC);
     }
@@ -115,6 +118,7 @@ public class serverlocation{
 
 	@SubscribeEvent
     public void onWorldJoin(PlayerChangedDimensionEvent event){
+		askedForCommand = true;
     	Minecraft.getMinecraft().thePlayer.sendChatMessage("/whereami");
     }
 	
@@ -125,8 +129,14 @@ public class serverlocation{
 	
 	public void getPlayerPosition(){
 		x1 = Minecraft.getMinecraft().thePlayer.posX;
+		BigDecimal bd = new BigDecimal(x1).setScale(2, RoundingMode.HALF_EVEN);
+		x1 = bd.doubleValue();
 		y1 = Minecraft.getMinecraft().thePlayer.posY;
+		BigDecimal bd2 = new BigDecimal(y1).setScale(2, RoundingMode.HALF_EVEN);
+		y1 = bd2.doubleValue();
 		z1 = Minecraft.getMinecraft().thePlayer.posZ;
+		BigDecimal bd3 = new BigDecimal(z1).setScale(2, RoundingMode.HALF_EVEN);
+		z1 = bd3.doubleValue();
 		
 		x = String.valueOf(x1);
 		y = String.valueOf(y1);
