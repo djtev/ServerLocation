@@ -19,25 +19,31 @@ public class serverlocation{
 
     private boolean isOnHypixel = false;
     private String server = "NULL";
-   // private Thread thread = null;
-   // private int timeOut = 30000;
+    private Thread thread = null;
+    private int timeOut = 500;
     private boolean askedForCommand = false;
+    public double x1;
+    public double y1;
+    public double z1;
+    public String x = "";
+    public String y = "";
+    public String z = "";
 
     @EventHandler
     public void init(FMLInitializationEvent event){
-     /*   thread = new Thread(new Runnable() {
+        thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 while(true) {
                     try {
                         Thread.sleep(timeOut);
-                        issueLocationCommand();
+                        getPlayerPosition();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
             }
-        });*/
+        });
         MinecraftForge.EVENT_BUS.register(this);
         FMLCommonHandler.instance().bus().register(this);
     }
@@ -77,9 +83,11 @@ public class serverlocation{
 
 
     private void drawInstanceOnScreen(){
-    	Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("Hypixel", 10, 5, 0xC838FC);
-        Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("Instance: " + server, 10, 15, 0xC838FC);
-
+    	Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("Hypixel", 5, 5, 0xC838FC);
+        Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("Instance: " + server, 5, 15, 0xC838FC);
+        Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("X:" + x, 5, 25, 0xC838FC);
+        Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("Y: " + y, 5, 35, 0xC838FC);
+        Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("Z: " + z, 5, 45, 0xC838FC);
     }
 
     @SubscribeEvent
@@ -87,22 +95,22 @@ public class serverlocation{
         final ServerData data = Minecraft.getMinecraft().getCurrentServerData();
         if (data != null && data.serverIP.contains("hypixel.net")) {
             isOnHypixel = true;
-            //startServerCheckThread();
+            startServerCheckThread();
         }
     }
 
- /*   private void startServerCheckThread(){
+    private void startServerCheckThread(){
         thread.start();
     }
 
     private void stopServercheckThread(){
         thread.interrupt();
-    } */
+    } 
 
     @SubscribeEvent
     public void onDisconnect(FMLNetworkEvent.ClientDisconnectionFromServerEvent e) {
         isOnHypixel = false;
-        //stopServercheckThread();
+        stopServercheckThread();
     }
 
 	@SubscribeEvent
@@ -114,4 +122,14 @@ public class serverlocation{
         askedForCommand = true;
         Minecraft.getMinecraft().thePlayer.sendChatMessage("/whereami");
     }*/
+	
+	public void getPlayerPosition(){
+		x1 = Minecraft.getMinecraft().thePlayer.posX;
+		y1 = Minecraft.getMinecraft().thePlayer.posY;
+		z1 = Minecraft.getMinecraft().thePlayer.posZ;
+		
+		x = String.valueOf(x1);
+		y = String.valueOf(y1);
+		z = String.valueOf(z1);
+	}
 }
